@@ -5,7 +5,7 @@
 ## Login   <moran-_d@epitech.net>
 ##
 ## Started on  Tue Feb 17 08:58:30 2015 moran-_d
-## Last update Tue Feb 17 09:21:39 2015 moran-_d
+## Last update Mon Feb 23 21:21:44 2015 Julie Terranova
 ##
 
 NAME=   philo
@@ -13,13 +13,14 @@ NAME=   philo
 DIR=    src/
 
 SRC=	$(DIR)action.c \
-        $(DIR)philosophe.c
+        $(DIR)philosophe.c \
+	$(DIR)draw.c \
 
 OBJ=    $(SRC:.c=.o)
 
-CFLAGS= -Wall -Wextra -I include/ -g 
+CFLAGS= -g -Wall -Wextra -Werror -I include/
 
-LDFLAGS= -lpthread
+LDFLAGS= -lpthread -lSDLmain -lSDL -lX11
 
 all:    $(NAME)
 
@@ -33,3 +34,5 @@ fclean:         clean
 	rm -f $(NAME)
 
 re:     fclean all
+
+.PHONY:  all clean fclean re

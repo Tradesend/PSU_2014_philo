@@ -5,10 +5,11 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 10:03:04 2015 moran-_d
-** Last update Tue Feb 17 13:50:19 2015 moran-_d
+** Last update Mon Feb 23 21:26:48 2015 Julie Terranova
 */
 
 #include <pthread.h>
+#include "SDL/SDL.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -24,12 +25,20 @@ pthread_mutex_t *getMutex()
 void *action(void *phil)
 {
   philosophe *phi;
+  SDL_Event event;
+  int quit = 0;
 
   phi = (philosophe *)phil;
-  pthread_mutex_lock(getMutex());
-  pthread_mutex_unlock(getMutex());
-  while (42)
+  //pthread_mutex_lock(getMutex());
+  //pthread_mutex_unlock(getMutex());
+  while (42 && quit == 0)
     {
+      while (SDL_PollEvent(&event))
+	if(event.type == SDL_QUIT)
+	  {
+	    printf("\nYOU'RE FUCKING SUPPOSED TO QUIT ASSHOLE\n\n");
+	    quit = 1;
+	  }
       try_to_eat(phi);
       printf("Philosophe n°%d finished action\n", phi->id);
       sleepphil(phi);
@@ -103,7 +112,7 @@ int main(int argc, char **argv)
     nb = 7;
   else if ((nb = atoi(argv[1])) < 3)
     {
-      printf("Need atleast 3 philosophers\n");
+      printf("Need at least 3 philosophers\n");
       return (-1);
     }
   else if (nb > 5000)
@@ -111,5 +120,7 @@ int main(int argc, char **argv)
       printf("Nice try\n");
       return (-1);
     }
-  return (build(nb));
+  if (draw(nb) == -1)
+    return (printf("Something went wrong with the SDL\n"));
+  return (0);
 }
