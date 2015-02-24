@@ -1,0 +1,11 @@
+
+-faut 1 thread principal dans lequel on lance ts les threads:
+
+*soit 1 thread a part pr la lib graphique (best mais faut repasser sur tt le code)
+*soit pas de thread specifique, tu laisses le prog suivre sa route
+
+pb:
+-on utilise des functions pas lock pr des thread alors qu'on a des fuckin thread ---> like sdl_pollevent ---> pr la faire marcher on a une globale qu'il faut virer et replace par un code qui marche
+-on a zero free ---> wtf?
+
+UN THREAD POUR TOUTE ET J'AI DIT TOUTE!!!!!!!!!! MANIPULATION DE LA SDL.

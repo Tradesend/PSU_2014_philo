@@ -5,7 +5,7 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 10:03:04 2015 moran-_d
-** Last update Mon Feb 23 21:26:48 2015 Julie Terranova
+** Last update Tue Feb 24 15:13:18 2015 Julie Terranova
 */
 
 #include <pthread.h>
@@ -29,8 +29,8 @@ void *action(void *phil)
   int quit = 0;
 
   phi = (philosophe *)phil;
-  //pthread_mutex_lock(getMutex());
-  //pthread_mutex_unlock(getMutex());
+  pthread_mutex_lock(getMutex());
+  pthread_mutex_unlock(getMutex());
   while (42 && quit == 0)
     {
       while (SDL_PollEvent(&event))
