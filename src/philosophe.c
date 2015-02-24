@@ -5,7 +5,7 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 10:03:04 2015 moran-_d
-** Last update Tue Feb 24 15:34:57 2015 moran-_d
+** Last update Tue Feb 24 16:58:35 2015 moran-_d
 */
 
 #include <pthread.h>
@@ -22,29 +22,27 @@ pthread_mutex_t *getMutex()
   return (&mutex);
 }
 
+int manageQuit(int i)
+{
+  static int quit = 0;
+
+  if (i != 0)
+    quit = i;
+  return (quit);
+}
+
 void *action(void *phil)
 {
   philosophe *phi;
-  SDL_Event event;
-  int quit = 0;
 
   phi = (philosophe *)phil;
   pthread_mutex_lock(getMutex());
   pthread_mutex_unlock(getMutex());
-  while (42 && quit == 0)
+  while (manageQuit(0) == 0)
     {
-      while (SDL_PollEvent(&event))
-	if(event.type == SDL_QUIT)
-	  {
-	    printf("\nYOU'RE FUCKING SUPPOSED TO QUIT ASSHOLE\n\n");
-	    quit = 1;
-	  }
-      if (quit == 0)
-	{
-	  try_to_eat(phi);
-	  printf("Philosophe n°%d finished action\n", phi->id);
-	  sleepphil(phi);
-	}
+      try_to_eat(phi);
+      printf("Philosophe n°%d finished action\n", phi->id);
+      sleepphil(phi);
     }
   pthread_exit(NULL);
 }
@@ -71,11 +69,27 @@ philosophe *build_loop(int nb, philosophe **prev, pthread_t **thread_table)
 	  phi->right = (*prev)->left;
 	}
       if (start != *prev && start != phi)
-	pthread_create(&((*thread_table)[nb - 1]), NULL, action, (void *)(*prev));
+	pthread_create(&((*thread_table)[nb]), NULL, action, (void *)(*prev));
       *prev = phi;
       --nb;
     }
   return (start);
+}
+
+int proceed(int max, pthread_t *thread_table)
+{
+  SDL_Event event;
+
+  while (manageQuit(0) == 0)
+    while (SDL_PollEvent(&event))
+      if(event.type == SDL_QUIT)
+	manageQuit(1);
+  while (max >= 0)
+    {
+      pthread_join(thread_table[max], NULL);
+      --max;
+    }
+  return (0);
 }
 
 int build(int nb)
@@ -102,9 +116,7 @@ int build(int nb)
   pthread_create(&(thread_table[0]), NULL, action, (void *)prev);
   pthread_create(&(thread_table[max]), NULL, action, (void *)start);
   pthread_mutex_unlock(getMutex());
-  while (max >= 0)
-    pthread_join(thread_table[max--], NULL);
-  return (0);
+  return (proceed(max, thread_table));
 }
 
 int main(int argc, char **argv)
