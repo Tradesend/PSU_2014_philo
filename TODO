@@ -15,3 +15,9 @@ ___________
 Trouver comment placer son propre event custom dans PollEvent
 => et tu check si c'est un event custom tu change l'image (si possible, l'event prend une struct en param qui sera le philosophe_t)
 et ensuite tu me dis comment les créer+j'implé ca dans action ou tu le fait
+
+______________
+
+Mettre un usleep a la fin du changement d'image, dans la boucle de pollEvent si event == userevent
+feature bonus : connaitre le nombre d'event restant dans pollevent et l'afficher dans un coin de l'image
+
