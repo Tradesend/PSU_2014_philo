@@ -5,7 +5,7 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 10:03:04 2015 moran-_d
-** Last update Tue Feb 24 15:13:18 2015 Julie Terranova
+** Last update Tue Feb 24 15:34:57 2015 moran-_d
 */
 
 #include <pthread.h>
@@ -39,9 +39,12 @@ void *action(void *phil)
 	    printf("\nYOU'RE FUCKING SUPPOSED TO QUIT ASSHOLE\n\n");
 	    quit = 1;
 	  }
-      try_to_eat(phi);
-      printf("Philosophe n°%d finished action\n", phi->id);
-      sleepphil(phi);
+      if (quit == 0)
+	{
+	  try_to_eat(phi);
+	  printf("Philosophe n°%d finished action\n", phi->id);
+	  sleepphil(phi);
+	}
     }
   pthread_exit(NULL);
 }
@@ -115,7 +118,7 @@ int main(int argc, char **argv)
       printf("Need at least 3 philosophers\n");
       return (-1);
     }
-  else if (nb > 5000)
+  else if (nb > 50)
     {
       printf("Nice try\n");
       return (-1);

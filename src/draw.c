@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Mon Feb 23 11:40:07 2015 Julie Terranova
-** Last update Mon Feb 23 21:13:03 2015 Julie Terranova
+** Last update Tue Feb 24 15:42:43 2015 moran-_d
 */
 
 #include <pthread.h>
@@ -44,12 +44,12 @@ int	draw(int nb)
   SDL_Surface *background = NULL;
   SDL_Surface *screen = NULL;
 
+  XInitThreads();
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
     return (-1);
   if ((screen = SDL_SetVideoMode(900, 600, 32, SDL_SWSURFACE)) == NULL)
     return (-1);
   SDL_WM_SetCaption("Graphic version - Philosophers", NULL);
-  XInitThreads();
   //Chargement des images:
   if ((table = load_image("pictures/table.bmp")) == NULL)
     return (-1);
