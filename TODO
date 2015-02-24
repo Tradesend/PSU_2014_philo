@@ -9,3 +9,9 @@ pb:
 -on a zero free ---> wtf?
 
 UN THREAD POUR TOUTE ET J'AI DIT TOUTE!!!!!!!!!! MANIPULATION DE LA SDL.
+
+___________
+
+Trouver comment placer son propre event custom dans PollEvent
+=> et tu check si c'est un event custom tu change l'image (si possible, l'event prend une struct en param qui sera le philosophe_t)
+et ensuite tu me dis comment les créer+j'implé ca dans action ou tu le fait

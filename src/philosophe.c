@@ -1,11 +1,11 @@
 /*
-** philosophe.c for philosophe in /home/moran-_d/rendu/PSU_2014_philo
+** philosophe.c for peuimporte in /home/terran_j/rendu/PSU_2014_philo
 **
-** Made by moran-_d
-** Login   <moran-_d@epitech.net>
+** Made by Julie Terranova
+** Login   <terran_j@epitech.net>
 **
-** Started on  Mon Feb 16 10:03:04 2015 moran-_d
-** Last update Tue Feb 24 17:52:53 2015 Julie Terranova
+** Started on  Tue Feb 24 18:17:04 2015 Julie Terranova
+** Last update Tue Feb 24 18:17:07 2015 Julie Terranova
 */
 
 #include <pthread.h>
