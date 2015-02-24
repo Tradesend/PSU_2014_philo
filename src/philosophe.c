@@ -5,7 +5,7 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 10:03:04 2015 moran-_d
-** Last update Tue Feb 24 16:58:35 2015 moran-_d
+** Last update Tue Feb 24 17:52:53 2015 Julie Terranova
 */
 
 #include <pthread.h>
@@ -82,8 +82,12 @@ int proceed(int max, pthread_t *thread_table)
 
   while (manageQuit(0) == 0)
     while (SDL_PollEvent(&event))
-      if(event.type == SDL_QUIT)
+      if (event.type == SDL_QUIT)
 	manageQuit(1);
+      else if (event.type == SDL_USEREVENT)
+	{
+	  //func change image ---> event.user.data1 et cie
+	}
   while (max >= 0)
     {
       pthread_join(thread_table[max], NULL);
