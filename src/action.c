@@ -5,7 +5,7 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 11:08:03 2015 moran-_d
-** Last update Wed Feb 25 12:13:54 2015 Julie Terranova
+** Last update Wed Feb 25 20:36:08 2015 Julie Terranova
 */
 
 #include <unistd.h>
@@ -15,16 +15,24 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 
-void create_event(int action, int id)
+void create_event(int action2, int id2)
 {
   SDL_Event user_event;
+  int *action;
+  int *id;
 
-  // pe malloc?
+  if ((action = malloc(sizeof(*action))) == NULL)
+    return;
+  if ((id = malloc(sizeof(*id))) == NULL)
+    return;
+  action[0] = action2;
+  id[0] = id2;
+
   /* 0 = sleep ; 1 = eat ; 2 = think right ; 3 = think left */
   user_event.type = SDL_USEREVENT;
-  user_event.user.code = action;
-  user_event.user.data1 = (void*) (intptr_t) id;
-  user_event.user.data2 = (void*) (intptr_t) action;
+  user_event.user.code = action2; // useful?
+  user_event.user.data1 = id;
+  user_event.user.data2 = action;
   SDL_PushEvent(&user_event);
 }
 

@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Mon Feb 23 11:40:07 2015 Julie Terranova
-** Last update Wed Feb 25 13:18:39 2015 Julie Terranova
+** Last update Wed Feb 25 20:38:27 2015 Julie Terranova
 */
 
 #include <pthread.h>
@@ -59,9 +59,9 @@ int	draw(int nb)
   if ((my_struct.background = load_image("pictures/background.bmp")) == NULL)
     return (-1);
   //On applique le fond sur l'écran:
-  apply_surface(0, 0, my_struct.background, my_struct.screen);
-  apply_surface(200, 425, my_struct.stick, my_struct.screen);
-  apply_surface(710, 425, my_struct.stick, my_struct.screen);
+  // apply_surface(0, 0, my_struct.background, my_struct.screen);
+  // apply_surface(200, 425, my_struct.stick, my_struct.screen);
+  // apply_surface(710, 425, my_struct.stick, my_struct.screen);
 
   if (SDL_Flip(my_struct.screen) == -1)
     return (-1);
