@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Tue Feb 24 18:17:04 2015 Julie Terranova
-** Last update Tue Feb 24 18:17:07 2015 Julie Terranova
+** Last update Wed Feb 25 13:20:24 2015 Julie Terranova
 */
 
 #include <pthread.h>
@@ -76,7 +76,7 @@ philosophe *build_loop(int nb, philosophe **prev, pthread_t **thread_table)
   return (start);
 }
 
-int proceed(int max, pthread_t *thread_table)
+int proceed(int max, pthread_t *thread_table, t_sdl *my_struct)
 {
   SDL_Event event;
 
@@ -85,9 +85,8 @@ int proceed(int max, pthread_t *thread_table)
       if (event.type == SDL_QUIT)
 	manageQuit(1);
       else if (event.type == SDL_USEREVENT)
-	{
-	  //func change image ---> event.user.data1 et cie
-	}
+	if (move_picture(event.user.data1, event.user.data2, my_struct) == -1)
+	  return (printf("Something went wrong with the SDL\n"));
   while (max >= 0)
     {
       pthread_join(thread_table[max], NULL);
@@ -96,7 +95,7 @@ int proceed(int max, pthread_t *thread_table)
   return (0);
 }
 
-int build(int nb)
+int build(int nb, t_sdl *my_struct)
 {
   int max;
   philosophe *prev;
@@ -120,7 +119,7 @@ int build(int nb)
   pthread_create(&(thread_table[0]), NULL, action, (void *)prev);
   pthread_create(&(thread_table[max]), NULL, action, (void *)start);
   pthread_mutex_unlock(getMutex());
-  return (proceed(max, thread_table));
+  return (proceed(max, thread_table, my_struct));
 }
 
 int main(int argc, char **argv)

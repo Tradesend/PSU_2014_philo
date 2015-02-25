@@ -5,7 +5,7 @@
 ## Login   <moran-_d@epitech.net>
 ##
 ## Started on  Tue Feb 17 08:58:30 2015 moran-_d
-## Last update Mon Feb 23 21:21:44 2015 Julie Terranova
+## Last update Wed Feb 25 11:37:42 2015 Julie Terranova
 ##
 
 NAME=   philo
@@ -15,6 +15,7 @@ DIR=    src/
 SRC=	$(DIR)action.c \
         $(DIR)philosophe.c \
 	$(DIR)draw.c \
+	$(DIR)event.c \
 
 OBJ=    $(SRC:.c=.o)
 

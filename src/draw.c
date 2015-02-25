@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Mon Feb 23 11:40:07 2015 Julie Terranova
-** Last update Tue Feb 24 15:42:43 2015 moran-_d
+** Last update Wed Feb 25 13:18:39 2015 Julie Terranova
 */
 
 #include <pthread.h>
@@ -17,9 +17,11 @@
 
 SDL_Surface *load_image(char *filename)
 {
-  SDL_Surface* loadedImage = NULL;
-  SDL_Surface* optimizedImage = NULL;
+  SDL_Surface* loadedImage;
+  SDL_Surface* optimizedImage;
 
+  loadedImage = NULL;
+  optimizedImage = NULL;
   loadedImage = SDL_LoadBMP(filename);
   if (loadedImage != NULL)
     {
@@ -40,33 +42,35 @@ void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination)
 
 int	draw(int nb)
 {
-  SDL_Surface *table = NULL;
-  SDL_Surface *background = NULL;
-  SDL_Surface *screen = NULL;
+  t_sdl	my_struct;
 
+  my_struct.stick = NULL;
+  my_struct.background = NULL;
+  my_struct.screen = NULL;
   XInitThreads();
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
     return (-1);
-  if ((screen = SDL_SetVideoMode(900, 600, 32, SDL_SWSURFACE)) == NULL)
+  if ((my_struct.screen = SDL_SetVideoMode(900, 600, 32, SDL_SWSURFACE)) == NULL)
     return (-1);
   SDL_WM_SetCaption("Graphic version - Philosophers", NULL);
   //Chargement des images:
-  if ((table = load_image("pictures/table.bmp")) == NULL)
+  if ((my_struct.stick = load_image("pictures/stick.bmp")) == NULL)
     return (-1);
-  if ((background = load_image("pictures/background.bmp")) == NULL)
+  if ((my_struct.background = load_image("pictures/background.bmp")) == NULL)
     return (-1);
   //On applique le fond sur l'écran:
-  apply_surface(0, 0, background, screen);
-  apply_surface(180, 140, table, screen);
+  apply_surface(0, 0, my_struct.background, my_struct.screen);
+  apply_surface(200, 425, my_struct.stick, my_struct.screen);
+  apply_surface(710, 425, my_struct.stick, my_struct.screen);
 
-  if (SDL_Flip(screen) == -1)
+  if (SDL_Flip(my_struct.screen) == -1)
     return (-1);
 
-  build(nb);
+  build(nb, &my_struct);
 
   //Libération des surfaces
-  SDL_FreeSurface(table);
-  SDL_FreeSurface(background);
+  SDL_FreeSurface(my_struct.stick);
+  SDL_FreeSurface(my_struct.background);
 
   SDL_Quit();
   return (0);
