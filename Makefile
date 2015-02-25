@@ -5,7 +5,7 @@
 ## Login   <moran-_d@epitech.net>
 ##
 ## Started on  Tue Feb 17 08:58:30 2015 moran-_d
-## Last update Wed Feb 25 11:37:42 2015 Julie Terranova
+## Last update Wed Feb 25 21:54:27 2015 Julie Terranova
 ##
 
 NAME=   philo
@@ -21,7 +21,7 @@ OBJ=    $(SRC:.c=.o)
 
 CFLAGS= -g -Wall -Wextra -Werror -I include/
 
-LDFLAGS= -lpthread -lSDLmain -lSDL -lX11
+LDFLAGS= -lpthread -lSDLmain -lSDL -lX11 -lSDL_ttf
 
 all:    $(NAME)
 
