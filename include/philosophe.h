@@ -5,11 +5,14 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 10:33:51 2015 moran-_d
-** Last update Wed Feb 25 13:19:09 2015 Julie Terranova
+** Last update Wed Feb 25 13:40:17 2015 Julie Terranova
 */
 
 #ifndef PHILOSOPHE_H_
 # define PHILOSOPHE_H_
+
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
 
 typedef struct s_philosophe
 {

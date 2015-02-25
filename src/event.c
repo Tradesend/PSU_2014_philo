@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Tue Feb 24 19:26:36 2015 Julie Terranova
-** Last update Wed Feb 25 13:28:25 2015 Julie Terranova
+** Last update Wed Feb 25 13:40:39 2015 Julie Terranova
 */
 
 #include <pthread.h>
