@@ -5,53 +5,24 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 11:08:03 2015 moran-_d
-** Last update Wed Feb 25 20:36:08 2015 Julie Terranova
+** Last update Thu Feb 26 13:01:35 2015 moran-_d
 */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <pthread.h>
 #include "philosophe.h"
-#include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
-
-void create_event(int action2, int id2)
-{
-  SDL_Event user_event;
-  int *action;
-  int *id;
-
-  if ((action = malloc(sizeof(*action))) == NULL)
-    return;
-  if ((id = malloc(sizeof(*id))) == NULL)
-    return;
-  action[0] = action2;
-  id[0] = id2;
-
-  /* 0 = sleep ; 1 = eat ; 2 = think right ; 3 = think left */
-  user_event.type = SDL_USEREVENT;
-  user_event.user.code = action2; // useful?
-  user_event.user.data1 = id;
-  user_event.user.data2 = action;
-  SDL_PushEvent(&user_event);
-}
 
 void think(philosophe *phi, int indic)
 {
   int loop;
 
   if (indic == 1)
-    {
-      printf("Philosophe n°%d is thinking (Left)\n", phi->id);
-      create_event(3, phi->id);
-    }
+    create_event(3, phi->id);
   else
-    {
-      printf("Philosophe n°%d is thinking (Right)\n", phi->id);
-      create_event(2, phi->id);
-    }
+    create_event(2, phi->id);
   loop = 0;
-  while (phi->baguette < 2 && loop < 40 && sleep(1) == 0)
+  while (phi->baguette < 2 && loop++ < 40 && sleep(2) == 0)
     {
       if (indic == 1 && pthread_mutex_trylock(phi->right) == 0)
         phi->baguette += 1;
@@ -73,12 +44,10 @@ void think(philosophe *phi, int indic)
 
 void eat(philosophe *phi)
 {
-  printf("Philosophe n°%d is eating\n", phi->id);
   create_event(1, phi->id);
   sleep(5);
   pthread_mutex_unlock(phi->left);
   pthread_mutex_unlock(phi->right);
-  printf("Philosophe n°%d is done eating\n", phi->id);
   phi->baguette = 0;
 }
 
@@ -118,7 +87,6 @@ void try_to_eat(philosophe *phi)
 
 void sleepphil(philosophe *phi)
 {
-  printf("Philosophe n°%d is sleeping\n", phi->id);
   create_event(0, phi->id);
   if (phi->baguette > 0)
     printf("Y'a un problème Descartes\n");

@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Tue Feb 24 18:17:04 2015 Julie Terranova
-** Last update Wed Feb 25 13:20:24 2015 Julie Terranova
+** Last update Thu Feb 26 13:02:34 2015 moran-_d
 */
 
 #include <pthread.h>
@@ -41,7 +41,6 @@ void *action(void *phil)
   while (manageQuit(0) == 0)
     {
       try_to_eat(phi);
-      printf("Philosophe n°%d finished action\n", phi->id);
       sleepphil(phi);
     }
   pthread_exit(NULL);

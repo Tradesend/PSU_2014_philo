@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Tue Feb 24 19:26:36 2015 Julie Terranova
-** Last update Wed Feb 25 23:18:15 2015 Julie Terranova
+** Last update Thu Feb 26 13:02:57 2015 moran-_d
 */
 
 #include <pthread.h>
@@ -15,6 +15,26 @@
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_thread.h"
 #include "philosophe.h"
+
+/* 0 = sleep ; 1 = eat ; 2 = think right ; 3 = think left */
+void create_event(int action2, int id2)
+{
+  SDL_Event user_event;
+  int *action;
+  int *id;
+
+  if ((action = malloc(sizeof(*action))) == NULL)
+    return;
+  if ((id = malloc(sizeof(*id))) == NULL)
+    return;
+  action[0] = action2;
+  id[0] = id2;
+  user_event.type = SDL_USEREVENT;
+  user_event.user.code = action2;
+  user_event.user.data1 = id;
+  user_event.user.data2 = action;
+  SDL_PushEvent(&user_event);
+}
 
 int	move_picture(int *id, int *action, t_sdl *my_struct)
 {
@@ -47,6 +67,7 @@ int	move_picture(int *id, int *action, t_sdl *my_struct)
       apply_surface(0, 0, my_struct->background, my_struct->screen);
       apply_surface(200, 425, my_struct->stick, my_struct->screen);
       apply_surface(710, 425, my_struct->stick, my_struct->screen);
+      printf("The philosopher n %d is sleeping\n", id[0]);
       sprintf(str, "The philosopher n %d                                    is sleeping", id[0]);
       if ((message = TTF_RenderText_Solid( font, str, textColor )) == NULL)
 	return (-1);
@@ -57,7 +78,8 @@ int	move_picture(int *id, int *action, t_sdl *my_struct)
       apply_surface(0, 0, my_struct->background, my_struct->screen);
       apply_surface(440, 400, my_struct->stick, my_struct->screen);
       apply_surface(460, 400, my_struct->stick, my_struct->screen);
-    sprintf(str, "The philosopher n %d                                    is eating", id[0]);
+      printf("The philosopher n %d is eating\n", id[0]);
+      sprintf(str, "The philosopher n %d                                    is eating", id[0]);
       message = TTF_RenderText_Solid( font, str, textColor );
       if (message == NULL)
 	return (-1);
@@ -70,6 +92,7 @@ int	move_picture(int *id, int *action, t_sdl *my_struct)
 	  apply_surface(0, 0, my_struct->background, my_struct->screen);
 	  apply_surface(200, 200, my_struct->stick, my_struct->screen);
 	  apply_surface(710, 425, my_struct->stick, my_struct->screen);
+	  printf("The philosopher n %d is thinking right\n", id[0]);
 	  sprintf(str, "The philosopher n %d                                    is thinking right", id[0]);
 	  message = TTF_RenderText_Solid( font, str, textColor );
 	  if (message == NULL)
@@ -81,6 +104,7 @@ int	move_picture(int *id, int *action, t_sdl *my_struct)
 	  apply_surface(0, 0, my_struct->background, my_struct->screen);
 	  apply_surface(200, 425, my_struct->stick, my_struct->screen);
 	  apply_surface(710, 200, my_struct->stick, my_struct->screen);
+	  printf("The philosopher n %d is thinking left\n", id[0]);
 	  sprintf(str, "The philosopher n %d                                    is thinking left", id[0]);
 	  message = TTF_RenderText_Solid( font, str, textColor );
 	  if (message == NULL)
