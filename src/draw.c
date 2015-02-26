@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Mon Feb 23 11:40:07 2015 Julie Terranova
-** Last update Wed Feb 25 20:38:27 2015 Julie Terranova
+** Last update Thu Feb 26 19:41:33 2015 Julie Terranova
 */
 
 #include <pthread.h>
@@ -15,63 +15,58 @@
 #include "X11/Xlib.h"
 #include "philosophe.h"
 
-SDL_Surface *load_image(char *filename)
+SDL_Surface	*optimize_img(char *file)
 {
-  SDL_Surface* loadedImage;
-  SDL_Surface* optimizedImage;
+  SDL_Surface	*first_one;
+  SDL_Surface	*opti_one;
 
-  loadedImage = NULL;
-  optimizedImage = NULL;
-  loadedImage = SDL_LoadBMP(filename);
-  if (loadedImage != NULL)
+  first_one = NULL;
+  opti_one = NULL;
+  first_one = SDL_LoadBMP(file);
+  if (first_one != NULL)
     {
-      optimizedImage = SDL_DisplayFormat(loadedImage);
-      SDL_FreeSurface(loadedImage);
+      opti_one = SDL_DisplayFormat(first_one);
+      SDL_FreeSurface(first_one);
     }
-  return optimizedImage;
+  return (opti_one);
 }
 
-void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination)
+void	apply_surface(int x, int y, SDL_Surface* src, SDL_Surface* dest)
 {
-  SDL_Rect offset;
+  SDL_Rect	offset;
 
   offset.x = x;
   offset.y = y;
-  SDL_BlitSurface(source, NULL, destination, &offset);
+  SDL_BlitSurface(src, NULL, dest, &offset);
+}
+
+void	init(t_sdl *mine)
+{
+  mine->stick = NULL;
+  mine->background = NULL;
+  mine->screen = NULL;
 }
 
 int	draw(int nb)
 {
-  t_sdl	my_struct;
+  t_sdl	mine;
 
-  my_struct.stick = NULL;
-  my_struct.background = NULL;
-  my_struct.screen = NULL;
+  init(&mine);
   XInitThreads();
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
     return (-1);
-  if ((my_struct.screen = SDL_SetVideoMode(900, 600, 32, SDL_SWSURFACE)) == NULL)
+  if ((mine.screen = SDL_SetVideoMode(900, 600, 32, SDL_SWSURFACE)) == NULL)
     return (-1);
   SDL_WM_SetCaption("Graphic version - Philosophers", NULL);
-  //Chargement des images:
-  if ((my_struct.stick = load_image("pictures/stick.bmp")) == NULL)
+  if ((mine.stick = optimize_img("pictures/stick.bmp")) == NULL)
     return (-1);
-  if ((my_struct.background = load_image("pictures/background.bmp")) == NULL)
+  if ((mine.background = optimize_img("pictures/background.bmp")) == NULL)
     return (-1);
-  //On applique le fond sur l'écran:
-  // apply_surface(0, 0, my_struct.background, my_struct.screen);
-  // apply_surface(200, 425, my_struct.stick, my_struct.screen);
-  // apply_surface(710, 425, my_struct.stick, my_struct.screen);
-
-  if (SDL_Flip(my_struct.screen) == -1)
+  if (SDL_Flip(mine.screen) == -1)
     return (-1);
-
-  build(nb, &my_struct);
-
-  //Libération des surfaces
-  SDL_FreeSurface(my_struct.stick);
-  SDL_FreeSurface(my_struct.background);
-
+  build(nb, &mine);
+  SDL_FreeSurface(mine.stick);
+  SDL_FreeSurface(mine.background);
   SDL_Quit();
   return (0);
 }

@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Tue Feb 24 19:26:36 2015 Julie Terranova
-** Last update Thu Feb 26 13:02:57 2015 moran-_d
+** Last update Thu Feb 26 20:18:49 2015 Julie Terranova
 */
 
 #include <pthread.h>
@@ -16,12 +16,11 @@
 #include "SDL/SDL_thread.h"
 #include "philosophe.h"
 
-/* 0 = sleep ; 1 = eat ; 2 = think right ; 3 = think left */
-void create_event(int action2, int id2)
+void	create_event(int action2, int id2)
 {
-  SDL_Event user_event;
-  int *action;
-  int *id;
+  SDL_Event	user_event;
+  int		*action;
+  int		*id;
 
   if ((action = malloc(sizeof(*action))) == NULL)
     return;
@@ -36,86 +35,79 @@ void create_event(int action2, int id2)
   SDL_PushEvent(&user_event);
 }
 
-int	move_picture(int *id, int *action, t_sdl *my_struct)
+void	init_picture(t_ttf *sent)
 {
-  SDL_Surface *message;
-  TTF_Font *font;
-  SDL_Color textColor;
-  char *str;
+  sent->font = NULL;
+  sent->msg = NULL;
+  sent->txtColor.r = 255;
+  sent->txtColor.b = 255;
+  sent->txtColor.g = 255;
+}
 
-  str = malloc(sizeof(*str) * 100);
-  font = NULL;
-  message = NULL;
-  textColor.r = 255;
-  textColor.b = 255;
-  textColor.g = 255;
+int	move_picture(int *id, int *action, t_sdl *mine)
+{
+  t_ttf sent;
 
+  init_picture(&sent);
+  if ((sent.str = malloc(sizeof(*sent.str) * 100)) == NULL)
+    return (-1);
   if (TTF_Init() == -1)
     return (-1);
-
-  font = TTF_OpenFont("pictures/police.ttf", 28);
-
-  if (font == NULL) // font toujours == NULL
+  if ((sent.font = TTF_OpenFont("pictures/police.ttf", 28)) == NULL)
+    return (-1);
+  if (SDL_Flip(mine->screen) == -1)
     return (-1);
 
-  //sleep(0.5); // pr image mais pas pr affichage?
-  if (SDL_Flip(my_struct->screen) == -1)
-    return (-1);
-
-  if (action[0] == 0) // sleeps
+  if (action[0] == 0)
     {
-      apply_surface(0, 0, my_struct->background, my_struct->screen);
-      apply_surface(200, 425, my_struct->stick, my_struct->screen);
-      apply_surface(710, 425, my_struct->stick, my_struct->screen);
+      apply_surface(0, 0, mine->background, mine->screen);
+      apply_surface(200, 425, mine->stick, mine->screen);
+      apply_surface(710, 425, mine->stick, mine->screen);
       printf("The philosopher n %d is sleeping\n", id[0]);
-      sprintf(str, "The philosopher n %d                                    is sleeping", id[0]);
-      if ((message = TTF_RenderText_Solid( font, str, textColor )) == NULL)
+      sprintf(sent.str, "The philosopher n %d is sleeping", id[0]);
+      if ((sent.msg = TTF_RenderText_Solid(sent.font, sent.str, sent.txtColor)) == NULL)
 	return (-1);
-      apply_surface( 50, 180, message, my_struct->screen );
+      apply_surface(250, 50, sent.msg, mine->screen);
     }
-  else if (action[0] == 1) // eats
+  else if (action[0] == 1)
     {
-      apply_surface(0, 0, my_struct->background, my_struct->screen);
-      apply_surface(440, 400, my_struct->stick, my_struct->screen);
-      apply_surface(460, 400, my_struct->stick, my_struct->screen);
+      apply_surface(0, 0, mine->background, mine->screen);
+      apply_surface(440, 400, mine->stick, mine->screen);
+      apply_surface(460, 400, mine->stick, mine->screen);
       printf("The philosopher n %d is eating\n", id[0]);
-      sprintf(str, "The philosopher n %d                                    is eating", id[0]);
-      message = TTF_RenderText_Solid( font, str, textColor );
-      if (message == NULL)
+      sprintf(sent.str, "The philosopher n %d is eating", id[0]);
+      if ((sent.msg = TTF_RenderText_Solid(sent.font, sent.str, sent.txtColor)) == NULL)
 	return (-1);
-      apply_surface( 50, 180, message, my_struct->screen );
+      apply_surface(250, 50, sent.msg, mine->screen);
     }
   else // dedans exec une autre func (norme)
     {
-      if (action[0] == 2) // thinks right
+      if (action[0] == 2)
 	{
-	  apply_surface(0, 0, my_struct->background, my_struct->screen);
-	  apply_surface(200, 200, my_struct->stick, my_struct->screen);
-	  apply_surface(710, 425, my_struct->stick, my_struct->screen);
+	  apply_surface(0, 0, mine->background, mine->screen);
+	  apply_surface(200, 200, mine->stick, mine->screen);
+	  apply_surface(710, 425, mine->stick, mine->screen);
 	  printf("The philosopher n %d is thinking right\n", id[0]);
-	  sprintf(str, "The philosopher n %d                                    is thinking right", id[0]);
-	  message = TTF_RenderText_Solid( font, str, textColor );
-	  if (message == NULL)
+	  sprintf(sent.str, "The philosopher n %d is thinking right", id[0]);
+	  if ((sent.msg = TTF_RenderText_Solid(sent.font, sent.str, sent.txtColor)) == NULL)
 	    return (-1);
-	  apply_surface( 50, 180, message, my_struct->screen );
+	  apply_surface(250, 50, sent.msg, mine->screen);
 	}
-      else if (action[0] == 3) // thinks left
+      else if (action[0] == 3)
 	{
-	  apply_surface(0, 0, my_struct->background, my_struct->screen);
-	  apply_surface(200, 425, my_struct->stick, my_struct->screen);
-	  apply_surface(710, 200, my_struct->stick, my_struct->screen);
+	  apply_surface(0, 0, mine->background, mine->screen);
+	  apply_surface(200, 425, mine->stick, mine->screen);
+	  apply_surface(710, 200, mine->stick, mine->screen);
 	  printf("The philosopher n %d is thinking left\n", id[0]);
-	  sprintf(str, "The philosopher n %d                                    is thinking left", id[0]);
-	  message = TTF_RenderText_Solid( font, str, textColor );
-	  if (message == NULL)
+	  sprintf(sent.str, "The philosopher n %d is thinking left", id[0]);
+	  if ((sent.msg = TTF_RenderText_Solid(sent.font, sent.str, sent.txtColor)) == NULL)
 	    return (-1);
-	  apply_surface( 50, 180, message, my_struct->screen );
+	  apply_surface(250, 50, sent.msg, mine->screen);
 	}
     }
-  //clear surfaces ici! (si possible)
 
-  free(str);
-  TTF_CloseFont( font );
+  free(sent.str);
+  TTF_CloseFont(sent.font);
   TTF_Quit();
   return (0);
 }

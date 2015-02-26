@@ -5,7 +5,7 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 10:33:51 2015 moran-_d
-** Last update Thu Feb 26 13:09:35 2015 moran-_d
+** Last update Thu Feb 26 20:20:34 2015 Julie Terranova
 */
 
 #ifndef PHILOSOPHE_H_
@@ -14,6 +14,7 @@
 #include <pthread.h>
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include "SDL/SDL_ttf.h"
 
 typedef struct s_philosophe
 {
@@ -29,6 +30,14 @@ typedef struct s_sdl
   SDL_Surface *background;
   SDL_Surface *screen;
 } t_sdl;
+
+typedef struct s_ttf
+{
+  SDL_Surface	*msg;
+  TTF_Font      *font;
+  SDL_Color     txtColor;
+  char          *str;
+} t_ttf;
 
 pthread_mutex_t *getMutex();
 int manageQuit(int i);

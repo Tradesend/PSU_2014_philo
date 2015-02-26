@@ -5,7 +5,7 @@
 ## Login   <moran-_d@epitech.net>
 ##
 ## Started on  Tue Feb 17 08:58:30 2015 moran-_d
-## Last update Thu Feb 26 13:09:10 2015 moran-_d
+## Last update Thu Feb 26 19:09:53 2015 Julie Terranova
 ##
 
 NAME=   philo
@@ -21,21 +21,21 @@ SRC=	$(DIR)main.c \
 
 OBJ=    $(SRC:.c=.o)
 
-CFLAGS= -g -Wall -Wextra -Werror -I include/
+CFLAGS= -Wall -Wextra -Werror -I include/
 
 LDFLAGS= -lpthread -lSDLmain -lSDL -lX11 -lSDL_ttf
 
 all:    $(NAME)
 
-$(NAME):        $(OBJ)
+$(NAME):$(OBJ)
 	cc -o $(NAME) $(LDFLAGS) $(OBJ)
 
 clean:
 	rm -f $(OBJ)
 
-fclean:         clean
+fclean: clean
 	rm -f $(NAME)
 
 re:     fclean all
 
-.PHONY:  all clean fclean re
+.PHONY: all clean fclean re
