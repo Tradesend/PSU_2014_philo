@@ -5,7 +5,7 @@
 ## Login   <moran-_d@epitech.net>
 ##
 ## Started on  Tue Feb 17 08:58:30 2015 moran-_d
-## Last update Thu Feb 26 13:06:29 2015 moran-_d
+## Last update Thu Feb 26 13:09:10 2015 moran-_d
 ##
 
 NAME=   philo
@@ -13,6 +13,7 @@ NAME=   philo
 DIR=    src/
 
 SRC=	$(DIR)main.c \
+	$(DIR)manage_static.c \
 	$(DIR)action.c \
         $(DIR)philosophe.c \
 	$(DIR)draw.c \

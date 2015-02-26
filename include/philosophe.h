@@ -5,12 +5,13 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 10:33:51 2015 moran-_d
-** Last update Thu Feb 26 12:55:14 2015 moran-_d
+** Last update Thu Feb 26 13:09:35 2015 moran-_d
 */
 
 #ifndef PHILOSOPHE_H_
 # define PHILOSOPHE_H_
 
+#include <pthread.h>
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 
@@ -29,6 +30,8 @@ typedef struct s_sdl
   SDL_Surface *screen;
 } t_sdl;
 
+pthread_mutex_t *getMutex();
+int manageQuit(int i);
 void think(philosophe *phi, int indic);
 void eat(philosophe *phi);
 void try_to_think(philosophe *phi, int indic);
@@ -37,7 +40,7 @@ void sleepphil(philosophe *phi);
 int build(int nb, t_sdl *my_struct);
 int draw(int nb);
 int move_picture(int *id, int *action, t_sdl *my_struct);
-void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination);
+void apply_surface(int, int, SDL_Surface*, SDL_Surface*);
 void create_event(int action2, int id2);
 
 #endif

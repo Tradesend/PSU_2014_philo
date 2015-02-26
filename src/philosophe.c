@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Tue Feb 24 18:17:04 2015 Julie Terranova
-** Last update Thu Feb 26 13:06:13 2015 moran-_d
+** Last update Thu Feb 26 13:08:27 2015 moran-_d
 */
 
 #include <pthread.h>
@@ -14,22 +14,6 @@
 #include <unistd.h>
 #include "SDL/SDL.h"
 #include "philosophe.h"
-
-pthread_mutex_t *getMutex()
-{
-  static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
-  return (&mutex);
-}
-
-int manageQuit(int i)
-{
-  static int quit = 0;
-
-  if (i != 0)
-    quit = i;
-  return (quit);
-}
 
 void *action(void *phil)
 {
