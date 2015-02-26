@@ -5,7 +5,7 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Tue Feb 24 19:26:36 2015 Julie Terranova
-** Last update Thu Feb 26 20:18:49 2015 Julie Terranova
+** Last update Thu Feb 26 20:44:03 2015 Julie Terranova
 */
 
 #include <pthread.h>
@@ -57,55 +57,15 @@ int	move_picture(int *id, int *action, t_sdl *mine)
     return (-1);
   if (SDL_Flip(mine->screen) == -1)
     return (-1);
-
   if (action[0] == 0)
-    {
-      apply_surface(0, 0, mine->background, mine->screen);
-      apply_surface(200, 425, mine->stick, mine->screen);
-      apply_surface(710, 425, mine->stick, mine->screen);
-      printf("The philosopher n %d is sleeping\n", id[0]);
-      sprintf(sent.str, "The philosopher n %d is sleeping", id[0]);
-      if ((sent.msg = TTF_RenderText_Solid(sent.font, sent.str, sent.txtColor)) == NULL)
-	return (-1);
-      apply_surface(250, 50, sent.msg, mine->screen);
-    }
+    sleeps(mine, id, sent);
   else if (action[0] == 1)
-    {
-      apply_surface(0, 0, mine->background, mine->screen);
-      apply_surface(440, 400, mine->stick, mine->screen);
-      apply_surface(460, 400, mine->stick, mine->screen);
-      printf("The philosopher n %d is eating\n", id[0]);
-      sprintf(sent.str, "The philosopher n %d is eating", id[0]);
-      if ((sent.msg = TTF_RenderText_Solid(sent.font, sent.str, sent.txtColor)) == NULL)
-	return (-1);
-      apply_surface(250, 50, sent.msg, mine->screen);
-    }
-  else // dedans exec une autre func (norme)
-    {
-      if (action[0] == 2)
-	{
-	  apply_surface(0, 0, mine->background, mine->screen);
-	  apply_surface(200, 200, mine->stick, mine->screen);
-	  apply_surface(710, 425, mine->stick, mine->screen);
-	  printf("The philosopher n %d is thinking right\n", id[0]);
-	  sprintf(sent.str, "The philosopher n %d is thinking right", id[0]);
-	  if ((sent.msg = TTF_RenderText_Solid(sent.font, sent.str, sent.txtColor)) == NULL)
-	    return (-1);
-	  apply_surface(250, 50, sent.msg, mine->screen);
-	}
-      else if (action[0] == 3)
-	{
-	  apply_surface(0, 0, mine->background, mine->screen);
-	  apply_surface(200, 425, mine->stick, mine->screen);
-	  apply_surface(710, 200, mine->stick, mine->screen);
-	  printf("The philosopher n %d is thinking left\n", id[0]);
-	  sprintf(sent.str, "The philosopher n %d is thinking left", id[0]);
-	  if ((sent.msg = TTF_RenderText_Solid(sent.font, sent.str, sent.txtColor)) == NULL)
-	    return (-1);
-	  apply_surface(250, 50, sent.msg, mine->screen);
-	}
-    }
-
+    eats(mine, id, sent);
+  else
+    if (action[0] == 2)
+      thinksright(mine, id, sent);
+    else if (action[0] == 3)
+      thinksleft(mine, id, sent);
   free(sent.str);
   TTF_CloseFont(sent.font);
   TTF_Quit();

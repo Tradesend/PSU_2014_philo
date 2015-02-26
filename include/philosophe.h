@@ -5,7 +5,7 @@
 ** Login   <moran-_d@epitech.net>
 **
 ** Started on  Mon Feb 16 10:33:51 2015 moran-_d
-** Last update Thu Feb 26 20:20:34 2015 Julie Terranova
+** Last update Thu Feb 26 20:36:37 2015 Julie Terranova
 */
 
 #ifndef PHILOSOPHE_H_
@@ -51,5 +51,9 @@ int draw(int nb);
 int move_picture(int *id, int *action, t_sdl *my_struct);
 void apply_surface(int, int, SDL_Surface*, SDL_Surface*);
 void create_event(int action2, int id2);
+void sleeps(t_sdl *mine, int *id, t_ttf sent);
+void eats(t_sdl *mine, int *id, t_ttf sent);
+void thinksleft(t_sdl *mine, int *id, t_ttf sent);
+void thinksright(t_sdl *mine, int *id, t_ttf sent);
 
 #endif
