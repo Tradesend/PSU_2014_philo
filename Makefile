@@ -5,14 +5,15 @@
 ## Login   <moran-_d@epitech.net>
 ##
 ## Started on  Tue Feb 17 08:58:30 2015 moran-_d
-## Last update Wed Feb 25 21:54:27 2015 Julie Terranova
+## Last update Thu Feb 26 13:06:29 2015 moran-_d
 ##
 
 NAME=   philo
 
 DIR=    src/
 
-SRC=	$(DIR)action.c \
+SRC=	$(DIR)main.c \
+	$(DIR)action.c \
         $(DIR)philosophe.c \
 	$(DIR)draw.c \
 	$(DIR)event.c \

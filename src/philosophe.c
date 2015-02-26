@@ -5,14 +5,14 @@
 ** Login   <terran_j@epitech.net>
 **
 ** Started on  Tue Feb 24 18:17:04 2015 Julie Terranova
-** Last update Thu Feb 26 13:02:34 2015 moran-_d
+** Last update Thu Feb 26 13:06:13 2015 moran-_d
 */
 
 #include <pthread.h>
-#include "SDL/SDL.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include "SDL/SDL.h"
 #include "philosophe.h"
 
 pthread_mutex_t *getMutex()
@@ -119,25 +119,4 @@ int build(int nb, t_sdl *my_struct)
   pthread_create(&(thread_table[max]), NULL, action, (void *)start);
   pthread_mutex_unlock(getMutex());
   return (proceed(max, thread_table, my_struct));
-}
-
-int main(int argc, char **argv)
-{
-  int nb;
-
-  if (argc < 2)
-    nb = 7;
-  else if ((nb = atoi(argv[1])) < 3)
-    {
-      printf("Need at least 3 philosophers\n");
-      return (-1);
-    }
-  else if (nb > 50)
-    {
-      printf("Nice try\n");
-      return (-1);
-    }
-  if (draw(nb) == -1)
-    return (printf("Something went wrong with the SDL\n"));
-  return (0);
 }
